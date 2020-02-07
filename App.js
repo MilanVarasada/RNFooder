@@ -1,19 +1,22 @@
 import React from 'react';
-import { StyleSheet, Text, View } from 'react-native';
+import { createAppContainer, createSwitchNavigator } from 'react-navigation'
+import { createStackNavigator } from 'react-navigation-stack';
+import { createBottomTabNavigator, createMaterialTopTabNavigator } from 'react-navigation-tabs';
+import { createDrawerNavigator } from 'react-navigation-drawer';
+import LoginScreen from './src/screens/LoginScreen'
+import ListRecipe from'./src/screens/ListRecipe'
 
-export default function App() {
-  return (
-    <View style={styles.container}>
-      <Text>Hello</Text>
-    </View>
-  );
-}
-
-const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    backgroundColor: '#fff',
-    alignItems: 'center',
-    justifyContent: 'center',
+const navigator = createStackNavigator(
+  {
+    Login:LoginScreen,
+    List:ListRecipe
   },
-});
+  {
+    initialRouteName: 'Login',
+    defaultNavigationOptions: {
+      title: 'App'
+    }
+  }
+);
+
+export default createAppContainer(navigator);
