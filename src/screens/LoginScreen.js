@@ -5,7 +5,7 @@ import {CarouselView} from'./CarouselView'
 import SafeAreaView from 'react-native-safe-area-view';
 
 const images = [
-    "https://lh3.googleusercontent.com/proxy/QZPTNdFhfrVzT9FK9uWnPPfwaRhEo5E9HOr2vfmFVHXMnj4wHdk0phodC_hLzTWOUyLFApgWppMIzJsdPN7iEqJ2-7L7ocogoqnThSpOSo8",
+    "https://previews.123rf.com/images/pb_mail2000/pb_mail20000903/pb_mail2000090300002/4484783-high-resolution-for-food-beverage-photo.jpg",
     "https://images.pexels.com/photos/461198/pexels-photo-461198.jpeg?auto=compress&cs=tinysrgb&dpr=1&w=500",
     "https://images.pexels.com/photos/1600711/pexels-photo-1600711.jpeg?auto=compress&cs=tinysrgb&dpr=2&h=650&w=940",
     "https://images.pexels.com/photos/1633525/pexels-photo-1633525.jpeg?auto=compress&cs=tinysrgb&dpr=1&w=500",
@@ -16,7 +16,8 @@ const images = [
 export default class LoginScreen extends Component {
     constructor() {
         super()
-        this.state = { email: '', password: '' }
+        this.state = { email: 'jm1@example.com', password: 'jay@123',isLoading : false }
+        
     }
     
     render() {
@@ -67,6 +68,7 @@ export default class LoginScreen extends Component {
     }
     
     onLoginPress = () => {
+        this.setState({ isLoading: true });
         fetch('http://35.160.197.175:3006/api/v1/user/login',
             {
                 method: 'POST',
@@ -81,10 +83,10 @@ export default class LoginScreen extends Component {
                 if (response.status == 200) {
                     return response.json()
                 } else {
-
+                    this.setState({ isLoading: false });
                 }
             }).then((responseJSON) => {
-
+                this.setState({ isLoading: false });
                 Alert.alert('Success', 'Welcome! ' + responseJSON.firstName + ' ' + responseJSON.lastName, [
                     {
                         text: 'Okay',
@@ -103,7 +105,7 @@ export default class LoginScreen extends Component {
     
     static navigationOptions = {
         //To hide the ActionBar/NavigationBar
-        header: null,
+        headerShown : false
     };
 }
 
