@@ -1,8 +1,32 @@
-import React,{Component} from 'react';
-import { View } from 'react-native'
+import React,{ Component } from 'react';
+import { StyleSheet, Text, View } from 'react-native';
+import {connect} from 'react-redux'
 
-export default class SettingComponent extends Component {
-    render(){
-        return <View style={{flex:1}}></View>
+class SettingComponent extends Component {
+
+  componentDidMount(){
+    console.log("Setting" , this.props.token);
+    
+  }
+    render() {
+  
+        return (
+          <View style={styles.container}>
+              <Text> Setting</Text>
+            </View>
+            )
     }
 }
+
+const styles = StyleSheet.create({
+    container: {
+      flex: 1,
+      alignItems: 'center',
+      justifyContent: "center",
+    }
+});
+
+const mapStateToProps = (state) => {
+  return { token: state.token}
+}
+export default connect(mapStateToProps)(SettingComponent)

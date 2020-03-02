@@ -1,7 +1,10 @@
 import React,{Component} from 'react';
 import {Dimensions} from 'react-native'
 import {TouchableOpacity,StyleSheet,View,Text,Image,TextInput,Alert,Platform} from 'react-native';
-import {CarouselView} from'./CarouselView'
+import {CarouselView} from'./CarouselView';
+import {connect} from 'react-redux';
+import { bindActionCreators } from 'redux';
+import {YellowBox} from 'react-native'
 import SafeAreaView from 'react-native-safe-area-view';
 
 const images = [
@@ -13,14 +16,15 @@ const images = [
 
 //   var images=[{image:require('../../assets/slide1.jpg')},{image:require('../../assets/slide2.jpg')},{image:require('../../assets/slide3.jpg')}];
 
-export default class LoginScreen extends Component {
+class LoginComponent extends Component {
     constructor() {
         super()
-        this.state = { email: 'jm1@example.com', password: 'jay@123',isLoading : false }
+        this.state = { email: 'jm1@example.com', password: '',isLoading : false }
         
     }
     
     render() {
+        console.disableYellowBox = true;
         return <View style = {styles.mainView}>
         <View style = {styles.topVIew}>
             <CarouselView images={images} />
@@ -93,6 +97,8 @@ export default class LoginScreen extends Component {
                         style: 'cancel',
                         onPress: () => {
                             this.props.navigation.navigate('List',{token:responseJSON.token});
+                            // this.props.token(responseJson.token)
+                            // this.props.navigation.navigate('List')
                         }
                     },
                     {
@@ -220,3 +226,21 @@ const styles = StyleSheet.create ({
         alignItems:'center'
     },
 })
+
+
+function mapDispatchToProps(dispatch) {
+    return {
+        token: (value) => dispatch({
+            type: 'Token',
+            token: value
+        })
+    }
+}
+
+const mapStatetoProps = (state) =>{
+    return  {
+        token : state.token
+    }
+}
+
+export default connect(mapStatetoProps,mapDispatchToProps)(LoginComponent)

@@ -3,8 +3,9 @@ import {Text,View,StyleSheet,FlatList,RefreshControl,ActivityIndicator,Touchable
 import SafeAreaView from 'react-native-safe-area-view';
 import RecipeCell from '../Components/RecipeCell';
 import LoadingComponent from '../Components/LoadingComponent';
+import { connect } from 'react-redux'
 
-export default class fbLoginComponent extends Component {
+class fbLoginComponent extends Component {
     static navigationOptions = {
         title: 'Recipe',
         headerShown : false
@@ -44,6 +45,8 @@ getRecepeList = () => {
           }
       }).then((response) => { return response.json() })
       .then((responseJson) => {
+          console.log(responseJson);
+          
           this.setState({ isLoading: false })
           if (responseJson.error != null) {
               Alert.error('ERROR', responseJson.error)
@@ -131,3 +134,8 @@ const styles = StyleSheet.create(
         }
     }
 )
+
+const mapStateToProps = (state) => {
+    return { token: state.token }
+}
+export default connect(mapStateToProps)(fbLoginComponent)

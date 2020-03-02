@@ -9,6 +9,11 @@ import RecipeCell from './src/Components/RecipeCell'
 import RecipeDetails from './src/screens/RecipeDetails'
 import SettingComponent from './src/screens/setting';
 import AddRecipeComponent from './src/screens/AddRecipeComponent';
+import MapView from './src/screens/map';
+import ProfileScreen from './src/screens/profileScreen'
+import {createStore} from 'redux';
+import {Provider} from 'react-redux';
+
 
 const tabbarNavigator = createBottomTabNavigator({
   List: {
@@ -16,6 +21,19 @@ const tabbarNavigator = createBottomTabNavigator({
       title: 'Cooking List'
     }
   },
+
+  Map: {
+    screen: MapView, navigationOptions: {
+        title: 'Map'
+      }
+  },
+
+  ProfileScreen: {
+    screen: ProfileScreen, navigationOptions: {
+        title: 'Profile'
+      }
+  },
+
   setting: {
     screen: SettingComponent, navigationOptions: {
       title: 'Settings'
@@ -59,4 +77,25 @@ const navigate = createSwitchNavigator(
   }
 )
 
-export default createAppContainer(navigate);
+const AppContainer = createAppContainer(navigate);
+const initalSate = {
+  token: ''
+}
+const reducer = (state=initalSate,action) => {
+  switch (action.type) {
+      case 'Token':
+        return {token : action.token};
+      default:
+        return {token : action.token};
+  }
+}
+const store = createStore(reducer)
+// const ConnectedApp = connectActionSheet(App)
+
+export default function App() {
+return (
+<Provider store={store}>
+  <AppContainer/>
+</Provider>
+  );
+}

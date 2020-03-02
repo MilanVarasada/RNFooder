@@ -222,7 +222,7 @@ export default class AddRecipeComponent extends Component {
             body: formData
         }).then((responseJson) => {
             this.setState({isLoading:false})
-            Alert.alert('Success','Recipe added')
+            Alert.alert('Sucess','Your Recipe is Sucessfully Added')
           }).catch((error) => {
             this.setState({isLoading:false})
             Alert.alert('Fail','Failed to add recipe')
